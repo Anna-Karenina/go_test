@@ -36,8 +36,9 @@ func main() {
 	wg := &sync.WaitGroup{}
 
 	users := generateUsers(1000)
+	wg.Add(len(users))
+
 	for _, user := range users {
-		wg.Add(1)
 		go saveUserInfo(user, wg)
 	}
 
@@ -48,6 +49,7 @@ func main() {
 
 func saveUserInfo(user User, wg *sync.WaitGroup) error {
 
+	defer wg.Done()
 	filename := fmt.Sprintf("logs/uid_%d", user.id)
 
 	file, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, 0644)
@@ -59,7 +61,6 @@ func saveUserInfo(user User, wg *sync.WaitGroup) error {
 	if err != nil {
 		return err
 	}
-	wg.Done()
 	return nil
 
 }
