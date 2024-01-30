@@ -1,6 +1,8 @@
-all on my machine
+## Check nodejs vs go
 
-nodejs 20
-688s
-golang 1.21
-1.2616s
+
+
+|try| node v20 | golang 1.21 | comment |
+| ------ | ------ | ------ |------ |
+| 1 | 688ms | 1210ms | gc going crazy after free logs strings
+| 2 | 824ms| 225ms| add string builder in go, try join arrays of string in node
