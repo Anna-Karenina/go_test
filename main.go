@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 	"sync"
 
 	"time"
@@ -29,7 +30,6 @@ type User struct {
 }
 
 func main() {
-	rand.Seed(time.Now().Unix())
 
 	t := time.Now()
 
@@ -90,9 +90,18 @@ func generateUsers(count int) []User {
 }
 
 func (u User) getActivityInfo() string {
-	out := fmt.Sprintf("ID: %d | Email: %s\nActivity log:\n", u.id, u.email)
+	//gc going crazy to try free that memory
+	//______________________________________
+	//out := fmt.Sprintf("ID: %d | Email: %s\nActivity log:\n", u.id, u.email)
+	//for i, item := range u.logs {
+	//	out += fmt.Sprintf("%d. [%s] at %s\n", i+1, item.action, item.timestamp)
+	//}
+	//return out
+
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintf("ID: %d | Email: %s\nActivity log:\n", u.id, u.email))
 	for i, item := range u.logs {
-		out += fmt.Sprintf("%d. [%s] at %s\n", i+1, item.action, item.timestamp)
+		sb.WriteString(fmt.Sprintf("%d. [%s] at %s\n", i+1, item.action, item.timestamp))
 	}
-	return out
+	return sb.String()
 }

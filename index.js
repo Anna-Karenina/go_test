@@ -76,11 +76,16 @@ const saveUserInfo = async (user) => {
 
 const getActivityInfo = (user) => {
   let out = `ID: ${user.id} | Email: ${user.email}\nActivity log:\n`;
-  for (let i = 0; i < user.logs; i++) {
-    console.log(user);
+  for (let i = 0; i < user.logs.length; i++) {
     out += `%d. [${user.logs[i].action}] at ${user.logs[i].timestamp}\n`;
   }
   return out;
+  //thats method coast +200ms strings more effective in that case
+  // let out = [`ID: ${user.id} | Email: ${user.email}\nActivity log:\n`];
+  // for (let i = 0; i < user.logs.length; i++) {
+  //   out.push(`%d. [${user.logs[i].action}] at ${user.logs[i].timestamp}\n`)
+  // }
+  // return out.join();
 };
 
 main()
